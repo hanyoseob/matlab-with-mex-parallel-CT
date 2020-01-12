@@ -7,7 +7,19 @@
 
 ### Abstract
 X-ray computed tomography (CT) has experienced an explosion of technological development for a quarter century. Six years after the second edition of Computed Tomography, this third edition captures the most recent advances in technology and clinical applications. New to this edition are descriptions of iterative reconstruction, statistical reconstruction, methodologies used to model the CT systems, and the searching methodologies for optimal solutions. A new section on 3D printing introduces approaches by early adopters in the area. Also added is a description and discussion of the size-specific dose estimate, an index that attempts to more accurately reflect the dose absorption of specific-sized patients. The coverage of dual-energy CT has been significantly expanded to include its background, theoretical development, and clinical applications.
+              
+## Installation
+* Before execute `demo_parallelbeam_ct.m`, execute `mex_compile.m` to compile the mex files.
       
+## Execution Language
+* If execute the simulation based on `MATLAB ver.`,
+
+        param.device='matlab';
+
+* If execute the simulation based on `C/C++ ver.`,
+
+        param.device='clang';
+   
 ## Projection
 * Projection operator is implemented based on Ch.3 Equations (3.5) & (3.6).
 * `Ray-driven method` is applied to Projection operator.
@@ -81,14 +93,20 @@ X-ray computed tomography (CT) has experienced an explosion of technological dev
     3. dOffsetImgX, dOffsetImgY `[element; (float, +-)]` : 0, 0
 
 ## Execution Time
-* While Matlab is optimized to calculate the Matrix operation, it is calculated by pixel operation to match the Equations explicitly. 
-* Therefore, the execution time is slow as shown in a table below.
+* Execution time for `MATLAB ver.`
 
-| Operation  | Execution time | Remark |
-| :---------:| :------------: | :----: |
-| Projection | about 1000 sec | *ray-driven* |
-| (a) Filtering | about 0.025 sec | *convolution* |
-| (b) Filtering | about 0.050 sec | *zero-padding + FFT*|
-| Backprojection | about 300 sec | *pixel-driven* |
+    | Operation  | Execution time | Remark |
+    | :---------:| :------------: | :----: |
+    | Projection | about 1000 sec | *ray-driven* |
+    | (a) Filtering | about 0.025 sec | *convolution* |
+    | (b) Filtering | about 0.05 sec | *zero-padding + FFT*|
+    | Backprojection | about 300 sec | *pixel-driven* |
 
-> To reduce the execution time, Codes of `C/C++ ver.` and/or `Python ver.` code will be published **as soon as possible**.
+* Execution time for `C/C++ ver.`
+
+    | Operation  | Execution time | Acceleration  |
+    | :---------:| :------------: | :----: |
+    | Projection | about 0.500 sec | *x2000*   |
+    | (a) Filtering | about 0.05 sec | *x0.5* |
+    | (b) Filtering | about 0.01 sec | *x5*|
+    | Backprojection | about 1 sec | *x300* |
