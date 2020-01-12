@@ -113,7 +113,8 @@ void    runFourierTransform1d(float *pout, float *pin,
                         float *pdImg, int *pnImg, float *pdOffsetImg) {
     
     
-    float   pnDctExt[2] = {pnDct[Y], 2*pnDct[X] - 1};
+    int     nDctExtX	= pow(2, ceil(log2(2.0f*pnDct[X])));
+    float   pnDctExt[2] = {pnDct[Y], nDctExtX};
     
     float   *pker       = (float*)   malloc(pnDctExt[X] * sizeof(float));
     memset(pker, 0, pnDctExt[X] * sizeof(float));
@@ -127,11 +128,13 @@ void    runFourierTransform1d(float *pout, float *pin,
      *
      */  
     
-    fftwf_complex	*pker_ft	= (fftwf_complex*)  fftwf_malloc(pnDct[X] * sizeof(fftwf_complex));
-    memset(pker_ft, 0, pnDct[X] * sizeof(fftwf_complex));
+//     fftwf_complex	*pker_ft	= (fftwf_complex*)  fftwf_malloc(pnDct[X] * sizeof(fftwf_complex));
+    fftwf_complex	*pker_ft	= (fftwf_complex*)  fftwf_malloc(pnDctExt[X] * sizeof(fftwf_complex));
+    memset(pker_ft, 0, pnDctExt[X] * sizeof(fftwf_complex));
     
-    fftwf_complex	*pview_ft	= (fftwf_complex*)  fftwf_malloc(pnDct[X] * sizeof(fftwf_complex));
-    memset(pview_ft, 0, pnDct[X] * sizeof(fftwf_complex));
+//     fftwf_complex	*pview_ft	= (fftwf_complex*)  fftwf_malloc(pnDct[X] * sizeof(fftwf_complex));
+    fftwf_complex	*pview_ft	= (fftwf_complex*)  fftwf_malloc(pnDctExt[X] * sizeof(fftwf_complex));
+    memset(pview_ft, 0, pnDctExt[X] * sizeof(fftwf_complex));
 
     
 	fftwf_plan p, pi;
@@ -155,7 +158,7 @@ void    runFourierTransform1d(float *pout, float *pin,
         memcpy(pker, &pin[pnDct[X]*iView], pnDct[X] * sizeof(float));
         fftwf_execute(p);  
         
-        for (int iDctX = 0; iDctX < pnDct[X]; iDctX++) {
+        for (int iDctX = 0; iDctX < pnDctExt[X]; iDctX++) {
             pview_ft_[REAL]         = pview_ft[iDctX][REAL];
             pview_ft_[IMAG]         = pview_ft[iDctX][IMAG];
             pview_ft[iDctX][REAL]   = 1.0f/pnDctExt[X]*(pview_ft_[REAL]*pker_ft[iDctX][REAL] - pview_ft_[IMAG]*pker_ft[iDctX][IMAG]);

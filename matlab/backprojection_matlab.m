@@ -42,7 +42,7 @@ for iview = 0:param.nView-1
             
             nCurIdDctX   = pos2id(dDistX, param.dDctX, param.nDctX) - param.dOffsetDctX + 1;
             
-            pdOut_(iimgy + 1, iimgx + 1)	= interpolation1d(pdIn(:, iview + 1), nCurIdDctX, param.nDctX, param.nImgX);
+            pdOut_(iimgy + 1, iimgx + 1)	= interpolation1d(pdIn(:, iview + 1), nCurIdDctX, param.nDctX);
             
         end
     end

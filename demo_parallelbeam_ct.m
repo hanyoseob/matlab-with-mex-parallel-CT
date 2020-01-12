@@ -3,13 +3,14 @@ close all;
 
 %%
 restoredefaultpath();
+addpath('./lib');
 addpath('./util');
 addpath('./matlab');
 addpath('./mex');
 
 %% Select the device to execute the simulation
 % device: computed language to execute the simulation, choise=['matlab', 'clang'; (string)]
-param.device    = 'clang';
+param.device    = 'matlab';
 
 %% X-ray CT System parameter
 % dAngle: Measure from 0 until the angle [degree; (float)]
@@ -30,7 +31,7 @@ param.DSD           = 800;
 % dOffsetDctY, dOffsetDctX  : Index of shifted detector [element; (float; +, -)]
 % compute_filtering         : Filtering method, choise=['conv', 'fft'; (string)]
 % ---------------------------------------------------
-% '*DctY' parameters are only used when 3D CT system. 
+% '*DctY' parameters are only used when 3D CT system.
 % ---------------------------------------------------
 
 param.dDctY         = 1;
@@ -40,9 +41,9 @@ param.nDctY         = 1;
 param.nDctX         = 400;
 
 param.dOffsetDctY   = 0;
-param.dOffsetDctX   = 20;
+param.dOffsetDctX   = 0;
 
-param.compute_filtering = 'fft';
+param.compute_filtering = 'conv';
 
 %% Object parameter
 % dImgY, dImgX, dImgZ	: Pixel resolution [mm; (float)]
