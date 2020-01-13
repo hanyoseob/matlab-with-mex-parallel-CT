@@ -30,7 +30,7 @@ void	generate_filter(float *pker, float d, int n);
 void	convolution1d(float *pout, float *pin, float *pker, int n);
 
 float   interpolation1d(float *pin, float curid, int n);
-float   interpolation2d(float *pin, float curidy, int ny, float curidx, int nx);
+float   interpolation2d(float *pin, float *pcurid, int *pn);
 
 
 /*
@@ -101,8 +101,13 @@ float interpolation1d(float *pin, float curid, int n) {
     return out ;
 }
 
-float interpolation2d(float *pin, float curidy, int ny,
-                                    float curidx, int nx) {
+float interpolation2d(float *pin, float *pcurid, int *pn) {
+
+    float curidy    = pcurid[Y];
+    float curidx    = pcurid[X];
+
+    int ny          = pn[Y];
+    int nx          = pn[X];
     
     if (curidx < 0 || curidy < 0 || curidx >= nx-1 || curidy >= ny-1) {
         return 0;

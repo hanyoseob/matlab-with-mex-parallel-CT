@@ -163,7 +163,7 @@ void    runProjection(float *pout, float *pin,
                 pnCurIdImg[Y]	= pos2id(pdPosImg[Y] + iSample*pdNorDir[Y], pdImg[Y], pnImg[Y]) - pdOffsetImg[Y];
                 pnCurIdImg[X]	= pos2id(pdPosImg[X] + iSample*pdNorDir[X], pdImg[X], pnImg[X]) - pdOffsetImg[X];
                 
-                out             += interpolation2d(pin, pnCurIdImg[Y], pnImg[Y], pnCurIdImg[X], pnImg[X]);
+                out             += interpolation2d(pin, pnCurIdImg, pnImg);
             }
             
             pout[pnDct[X]*iView + iDctX]     = dSample*out;
